@@ -22,7 +22,38 @@ server.post('/api/messages', connector.listen());
 //=========================================================
 // Bots Dialogs
 //=========================================================
+// Imports the Google Cloud client library
+const Translate = require('@google-cloud/translate');
+
+// Your Google Cloud Platform project ID
+const projectId = 'translator-156714';
+
+// Instantiates a client
+const translateClient = Translate({
+  projectId: projectId,
+  keyFilename: 'Translator-131a6896fcd5.json'
+}); 
+
 
 bot.dialog('/', function (session) {
-    session.send("Hello World");
+	var text = session.message.text;
+    translateClient.detect(session.message.text, function(err, results) {
+  	if (!err) {
+  		console.log(results);
+  		var lan = results.language;
+    	//Decacts the code and keeps if its not the user lanagues
+    	if(results.language != 'en')
+    	{
+			translateClient.translate(session.message.text, 'en').then((results) => {
+   			const translation = results[0];
+   			session.send(translation + ' translated from ' + lan);  });
+    	}
+  	}
+  	else
+  	{
+  		console.log(err);
+    	session.send(err);
+  	}
+	});
 });
+
