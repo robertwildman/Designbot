@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@google-cloud/speech": "^0.5.1",
     "@google-cloud/translate": "^0.6.1",
     "botbuilder": "^3.5.4",
+    "botbuilder-calling": "^3.0.1",
     "restify": "^4.3.0",
     "yo": "^1.8.5"
   },

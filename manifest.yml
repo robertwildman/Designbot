@@ -1,0 +1,7 @@
+applications:
+- services:
+  - my-service-instance
+  name: designbot234564
+  command: node index.js
+  path: .
+  memory: 512M
