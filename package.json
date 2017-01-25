@@ -1,0 +1,26 @@
+{
+  "name": "designbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@google-cloud/translate": "^0.6.1",
+    "botbuilder": "^3.5.4",
+    "restify": "^4.3.0",
+    "yo": "^1.8.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertwildman/Designbot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robertwildman/Designbot/issues"
+  },
+  "homepage": "https://github.com/robertwildman/Designbot#readme"
+}
