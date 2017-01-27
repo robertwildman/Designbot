@@ -27,6 +27,7 @@ var callconnector = new calling.CallConnector({
     appId: 'e2bdeafb-c196-40ef-84c1-7105af4ba7ba',
     appPassword: 'QkhEa1j5M9vig6Lyudd9pke'
 });
+//Making the callbot
 var callbot = new calling.UniversalCallBot(callconnector);
 server.post('/api/calls', callconnector.listen());
 
@@ -52,17 +53,19 @@ const translateClient = Translate({
   projectId: projectId,
   keyFilename: 'Translator-131a6896fcd5.json'
 }); 
+
 // Add root dialog
 callbot.dialog('/', [
     function (session) {
     	console.log(`1`);
-    	session.send("This is a intro");
+    	session.send("This is a intro ");
         calling.Prompts.record(session,"Leave Message after beep", { playBeep: true,recordingFormat: 'wav',maxDurationInSeconds:20 });
     },
     function (session, results) {
     	console.log(`1`);
         if (results.response) {
         	console.log(`1`);
+        	//To save to the file.
         	fs.writeFile("test.wav", results.response, function(err) {
 			    if(err) {
 			      console.log("err", err);
@@ -74,8 +77,10 @@ callbot.dialog('/', [
 			    sampleRate: 16000
 			  };
   			// Detects speech in the audio file, e.g. "./resources/audio.raw"
+  			// Sends it off to the speechclient
  		 return speechClient.recognize('test.wav', config)
     		.then((results) => {
+
 		      const transcription = results[0];
 		      session.send(transcription);
 		      console.log(`Transcription: ${transcription}`);
@@ -95,19 +100,16 @@ callbot.dialog('/', [
 ]);
 
 bot.dialog('/', function (session) {
+
 	var userlan = session.userData.Language;
 	var text = session.message.text;
-	if(text == 'call')
-	{
-
-	}else if (!session.userData.Language || text == 'edit lang') {
+	if (!session.userData.Language || text == 'edit lang') {
             session.beginDialog('/profile');
       } else {
     	translateClient.detect(session.message.text, function(err, results) {
   			if (!err) {
   			console.log(results);
   			var lan = results.language;
-    		//Decacts the code and keeps if its not the user lanagues
     		if(results.language != userlan)
     		{
 				translateClient.translate(session.message.text, userlan).then((results) => {
